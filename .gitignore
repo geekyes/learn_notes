@@ -1,0 +1,7 @@
+# 忽略的语法切换
+# syntax: regexp
+# syntax: glob
+
+# 忽略掉所有以 `.` 开头的文件
+/**/.*
+!.gitignore
