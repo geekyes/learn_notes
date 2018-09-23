@@ -2,6 +2,7 @@
 # syntax: regexp
 # syntax: glob
 
+/计算机基础/系统程序员成长计划/codes/objs
 # 忽略掉所有以 `.` 开头的文件
 /**/.*
 !.gitignore
