@@ -4,6 +4,8 @@
 
 /computer_basic/system_programmer_growth_plan/codes/objs
 
+# 忽略掉所有以 `__` 开头的文件
+/**/__*
 # 忽略掉所有以 `.` 开头的文件
 /**/.*
 !.gitignore
