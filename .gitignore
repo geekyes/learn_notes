@@ -1,11 +1,57 @@
 # 忽略的语法切换
 # syntax: regexp
+# 默认模式
 # syntax: glob
 
-/computer_basic/system_programmer_growth_plan/codes/objs
-
+# 备份文件可以使用这个后缀哦
+/**/*.old
 # 忽略掉所有以 `__` 开头的文件
 /**/__*
 # 忽略掉所有以 `.` 开头的文件
 /**/.*
 !.gitignore
+
+# 以下都是为了应对自己记不住的小毛病
+
+/computer_basic/system_programmer_growth_plan/codes/objs
+
+/tools/workspace/home/*
+!/tools/workspace/home/.bashrc
+!/tools/workspace/home/readme.md
+!/tools/workspace/home/vimfiles
+/tools/workspace/home/vimfiles/*
+!/tools/workspace/home/vimfiles/autoload
+!/tools/workspace/home/vimfiles/vimrc
+!/tools/workspace/home/nvim
+/tools/workspace/home/nvim/*
+!/tools/workspace/home/nvim/readme.md
+
+/tools/workspace/projects/*
+!/tools/workspace/projects/readme.md
+
+/tools/workspace/tools/*
+!/tools/workspace/tools/readme.md
+!/tools/workspace/tools/bin
+/tools/workspace/tools/bin/*
+!/tools/workspace/tools/bin/*.bat
+!/tools/workspace/tools/conemu
+/tools/workspace/tools/conemu/*
+!/tools/workspace/tools/conemu/ConEmu.xml
+
+/tools/workspace/backups/*
+!/tools/workspace/backups/readme.md
+!/tools/workspace/backups/misc
+/tools/workspace/backups/misc/*
+!/tools/workspace/backups/misc/swop_of_left_ctrl_to_capslock.reg
+!/tools/workspace/backups/misc/restore_of_left_ctrl_and_capslock.reg
+!/tools/workspace/backups/misc/readme.md
+!/tools/workspace/backups/software
+/tools/workspace/backups/software/*
+!/tools/workspace/backups/software/readme.md
+
+/tools/workspace/downloads/*
+!/tools/workspace/downloads/readme.md
+
+/tools/workspace/tmp/*
+!/tools/workspace/tmp/readme.md
+
