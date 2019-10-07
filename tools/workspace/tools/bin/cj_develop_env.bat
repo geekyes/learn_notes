@@ -12,7 +12,6 @@ set HOME=%WORKSPACE_PATH%\home
 set XDG_CONFIG_HOME=%HOME%
 set PYTHONHOME=%WORKSPACE_PATH%\tools\python3
 
-set PATH=%WORKSPACE_PATH%\tools\rt_thread_env\tools\bin;%PATH%
 set PATH=%WORKSPACE_PATH%\tools\bin;%PATH%
 set PATH=%MSYS2_PATH%\usr\bin;%MSYS2_PATH%\mingw64\bin;%MSYS2_PATH%\mingw32\bin;%PATH%
 set PATH=%PYTHONHOME%;%PATH%
