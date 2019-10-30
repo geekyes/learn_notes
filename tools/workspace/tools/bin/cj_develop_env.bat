@@ -14,6 +14,7 @@ set PYTHONHOME=%WORKSPACE_PATH%\tools\python3
 
 set PATH=%WORKSPACE_PATH%\tools\bin;%PATH%
 set PATH=%MSYS2_PATH%\usr\bin;%MSYS2_PATH%\mingw64\bin;%MSYS2_PATH%\mingw32\bin;%PATH%
+set PATH=%WORKSPACE_PATH%\tools\gnu_global\bin;%PATH%
 set PATH=%PYTHONHOME%;%PATH%
 set PATH=%WORKSPACE_PATH%\tools\vim;%WORKSPACE_PATH%\tools\neovim\bin;%PATH%
 
@@ -25,7 +26,7 @@ set msys2="www.msys2.org"
 echo Please visit %msys2% and install msys2 as %MSYS2_PATH% 
 echo OR modify "MSYS2_PATH ENV" of this script.
 pause
-exit -1
+goto this_script_end
 
 :this_script_end
 
