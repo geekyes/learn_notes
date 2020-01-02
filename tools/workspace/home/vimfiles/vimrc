@@ -74,31 +74,31 @@ Plug 'Lokaltog/vim-easymotion'
 Plug 'iamcco/markdown-preview.nvim', { 'do': { -> mkdp#util#install() } }
 " 自动补全相关
 " Plug 'neoclide/coc.nvim', {'branch': 'release'}
-if has('nvim')
-    Plug 'ncm2/ncm2'
-    Plug 'roxma/nvim-yarp'
-else
-    Plug 'ncm2/ncm2'
-    Plug 'roxma/nvim-yarp'
-    Plug 'roxma/vim-hug-neovim-rpc'
-endif
+Plug 'ncm2/ncm2'
+Plug 'roxma/nvim-yarp'
 " enable ncm2 for all buffers
 autocmd BufEnter * call ncm2#enable_for_buffer()
 " IMPORTANT: :help Ncm2PopupOpen for more information
 set completeopt=noinsert,menuone,noselect
 Plug 'ncm2/ncm2-path'
-Plug 'ncm2/ncm2-gtags'
-Plug 'ncm2/ncm2-pyclang'
 Plug 'ncm2/ncm2-jedi'
+if has('unix') || has('nvim')
+    Plug 'ncm2/ncm2-gtags'
+    Plug 'ncm2/ncm2-pyclang'
+else
+    Plug 'roxma/vim-hug-neovim-rpc'
+    if has("win64")
+        Plug 'snakeleon/YouCompleteMe-x64'
+    else
+        Plug 'snakeleon/YouCompleteMe-x86'
+    endif
+endif
 
 call plug#end()
 " <<<<
 
 " >>
 " 杂项
-
-" 让配置变更立即生效
-autocmd BufWritePost $MYVIMRC source $MYVIMRC
 
 " 定义快捷键的前缀，即 <Leader>
 let mapleader="\<space>"
@@ -407,30 +407,28 @@ let g:asyncrun_bell = 1
 " }
 
 " {     LeaderF 
-" 搜索工程下文件 类似ctrlp
-let g:Lf_ShortcutF = '<c-p>'
-" 打开vim的buffer
-"let g:Lf_ShortcutB = '<c-n>'
-noremap <Leader>hs :LeaderfMru<cr>
-" 列出当前文件的函数
-noremap <Leader>ff :LeaderfFunction<cr>
-" 打开vim的buffer
-noremap <Leader>b :LeaderfBuffer<cr>
-" 列出本文件tag
-"noremap <Leader>ta :LeaderfTag<cr>
-let g:Lf_StlSeparator = { 'left': '', 'right': '', 'font': '' }
- 
-" 先父目录寻找工程根目录
-let g:Lf_RootMarkers = ['.project', '.root', '.svn', '.git']
-" 工程目录模式 (没理解起！！！)
-let g:Lf_WorkingDirectoryMode = 'Ac'
-" 打开的分割窗口的高度
-let g:Lf_WindowHeight = 0.20
 " 文件目录的路径缓存文件夹
 let g:Lf_CacheDirectory = expand('~/.cache/LeaderF')
-" 自己理解为是否相对工程根目录
-let g:Lf_ShowRelativePath = 0
-" 不知道，慢慢了解吧！！！
+" 管理 gtags 数据库
+let g:Lf_GtagsAutoGenerate = 1
+" 怎么判断根目录
+let g:Lf_RootMarkers = ['.project', '.root', '.svn', '.git', 'hg']
+let g:Lf_WorkingDirectoryMode = 'Ac'
+" 交互界面的指示器
+let g:Lf_StlSeparator = { 'left': '', 'right': '', 'font': '' }
+" 文件显示路径的方式
+let g:Lf_ShowRelativePath = 1
+" 交互界面的位置
+let g:Lf_WindowPosition = 'bottom'
+" 打开的分割窗口的高度
+let g:Lf_WindowHeight = 0.27
+" preview oooo
+let g:Lf_PreviewInPopup = 1
+" preview 的位置
+let g:Lf_PreviewHorizontalPosition = 'right'
+" preview 的宽度
+let g:Lf_PreviewPopupWidth = 100
+" 按 <F1> 不显示软件帮助
 let g:Lf_HideHelp = 1
 " 不让光标闪烁
 let g:Lf_CursorBlink = 0
@@ -439,14 +437,24 @@ let g:Lf_StlColorscheme = 'simple'
  
 let g:Lf_NormalMap = {
     \ "File":   [["<ESC>", ':exec g:Lf_py "fileExplManager.quit()"<CR>'],
-    \            ["<F6>", ':exec g:Lf_py "fileExplManager.quit()"<CR>'] ],
+    \            ["<F6>", ':exec g:Lf_py "fileExplManager.quit()"<CR>']],
     \ "Buffer": [["<ESC>", ':exec g:Lf_py "bufExplManager.quit()"<CR>'],
-    \            ["<F6>", ':exec g:Lf_py "bufExplManager.quit()"<CR>'] ],
+    \            ["<F6>", ':exec g:Lf_py "bufExplManager.quit()"<CR>']],
     \ "Mru":    [["<ESC>", ':exec g:Lf_py "mruExplManager.quit()"<CR>']],
     \ "Tag":    [["<ESC>", ':exec g:Lf_py "tagExplManager.quit()"<CR>']],
     \ "Function":    [["<ESC>", ':exec g:Lf_py "functionExplManager.quit()"<CR>']],
     \ "Colorscheme":    [["<ESC>", ':exec g:Lf_py "colorschemeExplManager.quit()"<CR>']],
     \ }
+" 搜索工程下文件 类似ctrlp
+let g:Lf_ShortcutF = '<c-p>'
+" 列出打开的历史文件
+noremap <Leader>hs :LeaderfMruCwd<cr>
+" 列出当前文件的函数
+noremap <Leader>ff :LeaderfFunctionAll<cr>
+" 打开vim的buffer
+noremap <Leader>b :LeaderfBufferAll<cr>
+" 列出本文件tag
+noremap <Leader>t :LeaderfBufTagAll<cr>
 " }
 
 " {    gen_tags 来自动加载工程的交叉引用的数据库
@@ -484,9 +492,55 @@ inoremap <expr> <S-Tab> pumvisible() ? "\<C-p>" : "\<S-Tab>"
 inoremap <expr> <CR> (pumvisible() ? "\<c-y>\<cr>" : "\<CR>")
 " }
 
-" {    ncm2 
-" path to directory where libclang.so can be found
-let g:ncm2_pyclang#library_path = '/c/Program Files/LLVM/lib'
-autocmd FileType c,cpp nnoremap <buffer> gd :<c-u>call ncm2_pyclang#goto_declaration()<cr>
-" }
+if has('unix') || has('nvim')
+    " {    ncm2_pyclang 
+    " path to directory where libclang.xx can be found
+    if ('unix')
+    else
+        let g:ncm2_pyclang#library_path = '/c/Program Files/LLVM/lib'
+    endif
+    autocmd FileType c,cpp nnoremap <buffer> gd :<c-u>call ncm2_pyclang#goto_declaration()<cr>
+    " }
+else
+    " >>	
+    " 基于语义的代码导航	
+    nnoremap <leader>jc :YcmCompleter GoToDeclaration<CR>	
+    " 只能是 #include 或已打开的文件	
+    nnoremap <leader>jd :YcmCompleter GoToDefinition<CR>	
+    " <<	
+    " >>	
+    " YCM 补全	
+    " YCM 补全菜单配色	
+    " 菜单	
+    "highlight Pmenu ctermfg=2 ctermbg=3 guifg=#005f87 guibg=#EEE8D5	
+    " 选中项	
+    "highlight PmenuSel ctermfg=2 ctermbg=3 guifg=#AFD700 guibg=#106900	
+    " 补全功能在注释中同样有效	
+    let g:ycm_complete_in_comments=1	
+    " 允许 vim 加载 .ycm_extra_conf.py 文件，不再提示	
+    let g:ycm_confirm_extra_conf=0	
+    " 补全内容不以分割子窗口形式出现，只显示补全列表	
+    set completeopt-=preview	
+    " 从第一个键入字符就开始罗列匹配项	
+    let g:ycm_min_num_of_chars_for_completion=1	
+    " 禁止缓存匹配项，每次都重新生成匹配项	
+    let g:ycm_cache_omnifunc=0	
+    " 语法关键字补全	
+    let g:ycm_seed_identifiers_with_syntax=1	
+    " <<
+    " {    YouCompleteMe 附加配置	
+    " 触发语义补齐	
+    let g:ycm_semantic_triggers =  {	
+                \ 'c,cpp,python': ['re!\w{2}'],	
+                \ 'lua': ['re!\w{2}'],	
+                \ }	
+    " 只有下面后缀的文件才启动分析	
+    let g:ycm_filetype_whitelist = { 	
+                \ "c":1,	
+                \ "cpp":1, 	
+                \ "py":1,	
+                \ "sh":1,	
+                \ }	
+    " }
+endif
 
