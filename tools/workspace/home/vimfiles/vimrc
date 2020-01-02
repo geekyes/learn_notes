@@ -450,7 +450,7 @@ let g:Lf_ShortcutF = '<c-p>'
 " 列出打开的历史文件
 noremap <Leader>hs :LeaderfMruCwd<cr>
 " 列出当前文件的函数
-noremap <Leader>ff :LeaderfFunctionAll<cr>
+noremap <Leader>ff :LeaderfFunction<cr>
 " 打开vim的buffer
 noremap <Leader>b :LeaderfBufferAll<cr>
 " 列出本文件tag
