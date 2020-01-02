@@ -1,5 +1,6 @@
 
 # windows 工具安装说明
+> 此说明的存在意义在于我下次在新电脑上安装，不用到处找软件的下载链接，自动脚本不好搞，想用最新的软件版本，强迫症
 
 > 在 windows 7 下面安装经常使用的软件，在向 windows 10 迁移的时，在 windows 7 上安装的软件可以直接在 Windows 10 上打开，只是有些软件需要运行库支持，这其中有个难点就是不知道这个软件需要的是那个版本的运行库。
 
@@ -23,9 +24,9 @@
 
 3. Update!!! [pacman 常用命令](https://www.jianshu.com/p/ea651cdc5530)
 
-4. 安装 `git`
+4. 安装 `git, gcc_x64`
 ```bash
-$ pacman -S git
+$ pacman -S git mingw-w64-x86_64-gcc
 ```
 
 5. 克隆 `this` 并且运行部署脚步
@@ -38,12 +39,26 @@ $ start ./learn_notes/tools/workspace/tools/bin/cj_develop_env.bat
 
 ### ConEmu
 > [配置文件](https://github.com/geekyes/learn_notes/blob/master/tools/workspace/tools/conemu/ConEmu.xml)
-- `cj_develop_env.bat` 会自动下载后解压
+
+- [ConEmu](https://conemu.github.io/)
 
 ### vim
-1. [vim 完整编译好的版本下载地址](https://github.com/vim/vim-win32-installer/releases)
-2. `cj_develop_env.bat` 会自动下载后解压
-
+> 自己使用的插件需要 python 所以需要留意 vim 编译的 python 版本是多少，不然 vim 会启动闪退
 
 0. 注：`msys2` 的 `python` 运行有问题，所以需要手动安装 [python3](https://www.python.org/downloads/) ，主要是配合 `vim` 作扩展，所以需要查看 [vim 编译依赖](https://github.com/vim/vim-win32-installer/blob/master/README.md) 
+1. [vim 完整编译好的版本下载地址](https://github.com/vim/vim-win32-installer/releases)
+2. 源码 tag 工具
+    - [universal ctags](https://github.com/universal-ctags/ctags)
+    - [gnu global](https://www.gnu.org/software/global/)
+    - [universal ctags download](https://github.com/universal-ctags/ctags-win32/releases) && [gnu global download](http://adoxa.altervista.org/global/)
+    - vim 的自动生成 tag 插件 [/gen\_tags.vim](https://github.com/jsfaint/gen_tags.vim)
+3. 各种自动补全的插件
+    - c/c++ 补全不卡，体验好点的 [YouCompleteMe X64](https://github.com/snakeleon/YouCompleteMe-x64) && [X86](https://github.com/snakeleon/YouCompleteMe-x86)
+    - python 补全 [ncm2-jedi](https://github.com/ncm2/ncm2-jedi)
+    - path 补全 [ncm2-path](https://github.com/ncm2/ncm2-path)
 
+
+## MCU 工具
+    - [arm series open toolchains(rt-thread Env)](https://www.rt-thread.org/page/download.html)
+    - [C51 series open toolchains(sdcc)](http://sdcc.sourceforge.net/)
+    - [open Debug tool(openOCD)](http://openocd.org/)
